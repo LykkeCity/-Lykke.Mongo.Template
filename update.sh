@@ -46,7 +46,7 @@ mkdir /Mongo-DB/db
 mkdir /Mongo-DB/index
 
 mount /dev/sdc /Mongo-DB/db
-mount /dev/sdc /Mongo-DB/index
+mount /dev/sdd /Mongo-DB/index
 
 disk1=$(sudo -i blkid | grep -e sdc | awk '{print $2}' | tr -d '"')
 echo "$disk1 /Mongo-DB/db   ext4   defaults,nofail   1   2"  >> /etc/fstab
