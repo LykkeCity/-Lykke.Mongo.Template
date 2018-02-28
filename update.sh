@@ -30,7 +30,7 @@ sudo -i blkid
 mkdir /Mongo-db
 mount /dev/sdc /Mongo-db/
 disk1=$(sudo -i blkid | grep -e sdc | awk '{print $2}' | tr -d '"')
-echo "$test /Mongo-db   ext4   defaults,nofail   1   2"  >> /etc/fstab
+echo "$disk1 /Mongo-db   ext4   defaults,nofail   1   2"  >> /etc/fstab
 
 
 mkdir ~/Docker-Compose
