@@ -11,7 +11,7 @@ sudo apt-get install -y docker-ce
 sudo apt-get install -y docker-ce
 sudo apt-get install -y docker-compose
 
-# FORMAT DISK
+# FORMAT DISK SDC
 fdisk /dev/sdc <<EOF
 n
 p
@@ -25,13 +25,36 @@ sudo mkfs -t ext4 /dev/sdc <<EOF
 yes
 EOF
 
+# FORMAT DISK SDD
+fdisk /dev/sdd <<EOF
+n
+p
+1
+
+
+w
+EOF
+
+sudo mkfs -t ext4 /dev/sdd <<EOF
+yes
+EOF
+
 #MOUNT DISK
 sudo -i blkid
-mkdir /Mongo-db
-mount /dev/sdc /Mongo-db/
-disk1=$(sudo -i blkid | grep -e sdc | awk '{print $2}' | tr -d '"')
-echo "$disk1 /Mongo-db   ext4   defaults,nofail   1   2"  >> /etc/fstab
+mkdir /Mongo-DB
+mkdir /Mongo-DB/db
+mkdir /Mongo-DB/index
 
+mount /dev/sdc /Mongo-DB/db
+mount /dev/sdc /Mongo-DB/index
+
+disk1=$(sudo -i blkid | grep -e sdc | awk '{print $2}' | tr -d '"')
+echo "$disk1 /Mongo-DB/db   ext4   defaults,nofail   1   2"  >> /etc/fstab
+
+disk2=$(sudo -i blkid | grep -e sdd | awk '{print $2}' | tr -d '"')
+echo "$disk2 /Mongo-DB/index   ext4   defaults,nofail   1   2"  >> /etc/fstab
 
 mkdir ~/Docker-Compose
 mkdir ~/Docker-Compose/Mongo
+
+cp /tmp/Lykke.Mongo.Template/docker-compose.yml ~/Docker-Compose/Mongo/docker-compose.yml
