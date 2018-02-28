@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  mongo:
+    image: 'lykkedev/mongo:1'
+
+    ports:
+      - '27017:27017'
+    volumes:
+      - /MongoData/db:/data/db
+      - /MongoData/index:/data/index
